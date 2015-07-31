@@ -25,6 +25,12 @@ namespace RambleTracker
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            config.Routes.MapHttpRoute(
+                name: "Positions",
+                routeTemplate: "api/{controller}/{positionData}",
+                defaults: new { id = RouteParameter.Optional }
+            );
         }
     }
 }
