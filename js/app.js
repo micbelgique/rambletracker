@@ -1,3 +1,5 @@
+/* global google */
+/// <reference path="../typings/jquery/jquery.d.ts"/>
 var path, map;
 
 $(function () {
@@ -66,21 +68,33 @@ function onTrackClick(id) {
 	$.getJSON("http://rambletracker7574.azurewebsites.net/api/tracks/" + id,
 		function (data) {
 
-			path.setMap(null);
-
-			var coordinates = [];
+			var raw_coordinates = [];
 
 			$.each(data.positions, function (key, val) {
-				coordinates.push(new google.maps.LatLng(val.latitude, val.longitude));
+				raw_coordinates.push(val.latitude + ',' + val.longitude);
 			});
 
-			path = new google.maps.Polyline({
-				path: coordinates,
-				geodesic: true,
-				strokeColor: '#FF0000',
-				strokeOpacity: 1.0,
-				strokeWeight: 2
-			});
-			path.setMap(map);
+			$.getJSON("https://roads.googleapis.com/v1/snapToRoads?path="
+				+ raw_coordinates.join("|")
+				+ "&interpolate=true&key=AIzaSyDpfavhcTcTozZ19OwiHyuRCTDOPBmP8O0",
+				function (road_data) {
+
+					path.setMap(null);
+
+					var coordinates = [];
+
+					$.each(data.snappedPoints, function (key, val) {
+						coordinates.push(new google.maps.LatLng(val.location.latitude, val.location.longitude));
+					});
+
+					path = new google.maps.Polyline({
+						path: coordinates,
+						geodesic: true,
+						strokeColor: '#FF0000',
+						strokeOpacity: 1.0,
+						strokeWeight: 2
+					});
+					path.setMap(map);
+				});
 		});
 };
