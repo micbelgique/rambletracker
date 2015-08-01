@@ -83,7 +83,7 @@ function onTrackClick(id) {
 
 					var coordinates = [];
 
-					$.each(data.snappedPoints, function (key, val) {
+					$.each(road_data.snappedPoints, function (key, val) {
 						coordinates.push(new google.maps.LatLng(val.location.latitude, val.location.longitude));
 					});
 
