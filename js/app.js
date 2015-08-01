@@ -1,8 +1,6 @@
+var path, map;
 
 $(function () {
-
-	var path, map;
-
 	function initialize() {
 
 		var coordinates = [
@@ -55,37 +53,34 @@ $(function () {
 		$.each(data, function (key, val) {
 			var date = new Date(val.date);
 
-			items.push('<a id="'
-				+ val.id
-				+ '" href="#" class="btn btn-default btn btn-block track">'
+			items.push('<a href="#" class="btn btn-default btn btn-block track" onclick="onTrackClick(' + val.id + ')">'
 				+ "Track from " + (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear()
 				+ "</a>");
 		});
 
 		$(items.join("")).appendTo("#sidepanel");
 	});
-
-	$("a.track").click(function () {
-		$.getJSON("http://rambletracker7574.azurewebsites.net/api/tracks/" + $(this).attr("id"),
-			function (data) {
-
-				path.setMap(null);
-
-				var coordinates = [];
-
-				$.each(data.positions, function (key, val) {
-					coordinates.push(new google.maps.LatLng(val.latitude, val.longitude));
-				});
-
-				path = new google.maps.Polyline({
-					path: coordinates,
-					geodesic: true,
-					strokeColor: '#FF0000',
-					strokeOpacity: 1.0,
-					strokeWeight: 2
-				});
-				path.setMap(map);
-			});
-	});
-
 });
+
+function onTrackClick(id) {
+	$.getJSON("http://rambletracker7574.azurewebsites.net/api/tracks/" + id,
+		function (data) {
+
+			path.setMap(null);
+
+			var coordinates = [];
+
+			$.each(data.positions, function (key, val) {
+				coordinates.push(new google.maps.LatLng(val.latitude, val.longitude));
+			});
+
+			path = new google.maps.Polyline({
+				path: coordinates,
+				geodesic: true,
+				strokeColor: '#FF0000',
+				strokeOpacity: 1.0,
+				strokeWeight: 2
+			});
+			path.setMap(map);
+		});
+};
