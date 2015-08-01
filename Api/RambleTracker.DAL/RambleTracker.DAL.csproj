@@ -51,6 +51,10 @@
     <Compile Include="Migrations\201507311413339_InitialCreate.Designer.cs">
       <DependentUpon>201507311413339_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201507312113072_20150731-Tracks.cs" />
+    <Compile Include="Migrations\201507312113072_20150731-Tracks.Designer.cs">
+      <DependentUpon>201507312113072_20150731-Tracks.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="RambleTrackerContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -68,6 +72,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201507311413339_InitialCreate.resx">
       <DependentUpon>201507311413339_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507312113072_20150731-Tracks.resx">
+      <DependentUpon>201507312113072_20150731-Tracks.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
