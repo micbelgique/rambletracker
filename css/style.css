@@ -1,4 +1,4 @@
-html, body, #container, #wrapper, #map-canvas {
+html, body, #container, #wrapper, #sidebar, #map-canvas {
 	height: 100%;
 }
 
@@ -6,12 +6,26 @@ body {
   	padding-top: 70px; 
 }
 
-#map-canvas {
-	margin: 0; 
-	padding: 0;
+#wrapper
+{
+    width:100%;
+    position:relative;
+    display:inline-block;
 }
 
-#sidepanel
+#sidebar
 {
-    overflow-y:scroll;
+    width:20%;
+    top:0px;
+    left:0px;
+    bottom:0px;
+    position:absolute;
+}
+#map-canvas
+{
+    width:80%;
+    position:relative;
+    float:right;
+	margin: 0; 
+	padding: 0;
 }
