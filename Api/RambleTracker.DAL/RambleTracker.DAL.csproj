@@ -51,9 +51,13 @@
     <Compile Include="Migrations\201507311413339_InitialCreate.Designer.cs">
       <DependentUpon>201507311413339_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201507312113072_20150731-Tracks.cs" />
-    <Compile Include="Migrations\201507312113072_20150731-Tracks.Designer.cs">
-      <DependentUpon>201507312113072_20150731-Tracks.cs</DependentUpon>
+    <Compile Include="Migrations\201508010810393_Tracks.cs" />
+    <Compile Include="Migrations\201508010810393_Tracks.Designer.cs">
+      <DependentUpon>201508010810393_Tracks.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508010826343_TrackDate.cs" />
+    <Compile Include="Migrations\201508010826343_TrackDate.Designer.cs">
+      <DependentUpon>201508010826343_TrackDate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="RambleTrackerContext.cs" />
@@ -73,8 +77,11 @@
     <EmbeddedResource Include="Migrations\201507311413339_InitialCreate.resx">
       <DependentUpon>201507311413339_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201507312113072_20150731-Tracks.resx">
-      <DependentUpon>201507312113072_20150731-Tracks.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201508010810393_Tracks.resx">
+      <DependentUpon>201508010810393_Tracks.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508010826343_TrackDate.resx">
+      <DependentUpon>201508010826343_TrackDate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

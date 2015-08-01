@@ -7,18 +7,18 @@ namespace RambleTracker.DAL.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class _20150731Tracks : IMigrationMetadata
+    public sealed partial class TrackDate : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(_20150731Tracks));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(TrackDate));
         
         string IMigrationMetadata.Id
         {
-            get { return "201507312113072_20150731-Tracks"; }
+            get { return "201508010826343_TrackDate"; }
         }
         
         string IMigrationMetadata.Source
         {
-            get { return Resources.GetString("Source"); }
+            get { return null; }
         }
         
         string IMigrationMetadata.Target

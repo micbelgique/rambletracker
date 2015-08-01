@@ -1,33 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using RambleTracker.DAL;
 using RambleTracker.Model;
+using RambleTracker.ViewModels;
 
 namespace RambleTracker.Controllers
 {
     public class TracksController : ApiController
     {
-        private RambleTrackerContext db = new RambleTrackerContext();
+        private readonly RambleTrackerContext _db = new RambleTrackerContext();
 
         // GET: api/Tracks
-        public IQueryable<Track> GetTracks()
+        public IQueryable<TrackViewModel> GetTracks()
         {
-            return db.Tracks;
+            return _db.Tracks.Select(x => new TrackViewModel
+            {
+                Id = x.Id,
+                Date = x.Date,
+                PositionDataIds = x.Positions.Select(z => z.Id).ToList()
+            });
         }
 
         // GET: api/Tracks/5
         [ResponseType(typeof(Track))]
         public IHttpActionResult GetTrack(int id)
         {
-            Track track = db.Tracks.Find(id);
+            var track = _db.Tracks.Find(id);
             if (track == null)
             {
                 return NotFound();
@@ -50,11 +52,11 @@ namespace RambleTracker.Controllers
                 return BadRequest();
             }
 
-            db.Entry(track).State = EntityState.Modified;
+            _db.Entry(track).State = EntityState.Modified;
 
             try
             {
-                db.SaveChanges();
+                _db.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -80,8 +82,8 @@ namespace RambleTracker.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Tracks.Add(track);
-            db.SaveChanges();
+            _db.Tracks.Add(track);
+            _db.SaveChanges();
 
             return CreatedAtRoute("DefaultApi", new { id = track.Id }, track);
         }
@@ -90,14 +92,14 @@ namespace RambleTracker.Controllers
         [ResponseType(typeof(Track))]
         public IHttpActionResult DeleteTrack(int id)
         {
-            Track track = db.Tracks.Find(id);
+            Track track = _db.Tracks.Find(id);
             if (track == null)
             {
                 return NotFound();
             }
 
-            db.Tracks.Remove(track);
-            db.SaveChanges();
+            _db.Tracks.Remove(track);
+            _db.SaveChanges();
 
             return Ok(track);
         }
@@ -106,14 +108,14 @@ namespace RambleTracker.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _db.Dispose();
             }
             base.Dispose(disposing);
         }
 
         private bool TrackExists(int id)
         {
-            return db.Tracks.Count(e => e.Id == id) > 0;
+            return _db.Tracks.Count(e => e.Id == id) > 0;
         }
     }
 }
