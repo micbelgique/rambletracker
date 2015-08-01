@@ -63,6 +63,10 @@
     <Compile Include="Migrations\201508010826343_TrackDate.Designer.cs">
       <DependentUpon>201508010826343_TrackDate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201508011349445_Images.cs" />
+    <Compile Include="Migrations\201508011349445_Images.Designer.cs">
+      <DependentUpon>201508011349445_Images.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="RambleTrackerContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -86,6 +90,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201508010826343_TrackDate.resx">
       <DependentUpon>201508010826343_TrackDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508011349445_Images.resx">
+      <DependentUpon>201508011349445_Images.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

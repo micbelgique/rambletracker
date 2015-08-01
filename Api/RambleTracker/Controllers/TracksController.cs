@@ -8,6 +8,8 @@ using System.Web.Http.Description;
 using RambleTracker.DAL;
 using RambleTracker.Model;
 using RambleTracker.ViewModels;
+using System.IO;
+using System;
 
 namespace RambleTracker.Controllers
 {
@@ -89,13 +91,41 @@ namespace RambleTracker.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+        //// POST: api/Tracks
+        //[ResponseType(typeof(Track))]
+        //public IHttpActionResult PostTrack(Track track)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
+
+        //    _db.Tracks.Add(track);
+        //    _db.SaveChanges();
+
+        //    return CreatedAtRoute("DefaultApi", new { id = track.Id }, track);
+        //}
+
         // POST: api/Tracks
         [ResponseType(typeof(Track))]
-        public IHttpActionResult PostTrack(Track track)
+        public IHttpActionResult PostTrack(string trackStr)
         {
-            if (!ModelState.IsValid)
+            Track track = new Track();
+
+            using (StringReader reader = new StringReader(trackStr))
             {
-                return BadRequest(ModelState);
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    PositionData pos = new PositionData();
+
+                    string[] parts = trackStr.Split(new char[] { ',' });
+                    pos.Latitude = Convert.ToDouble(parts[0]);
+                    pos.Longitude = Convert.ToDouble(parts[1]);
+                    DateTime.ParseExact(parts[2], "yyyy-MM-jj HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+
+                    track.Positions.Add(pos);
+                }
             }
 
             _db.Tracks.Add(track);

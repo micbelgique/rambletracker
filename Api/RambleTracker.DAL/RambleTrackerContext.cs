@@ -23,5 +23,7 @@ namespace RambleTracker.DAL
 
             base.OnModelCreating(modelBuilder);
         }
+
+        public System.Data.Entity.DbSet<RambleTracker.Model.Image> Images { get; set; }
     }
 }
