@@ -4,27 +4,37 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using RambleTracker.DAL;
 using RambleTracker.Model;
+using RambleTracker.ViewModels;
 
 namespace RambleTracker.Controllers
 {
+    [EnableCors(origins: "http://micdevcamp.github.io", headers:"*", methods:"*")]
     public class PositionDatasController : ApiController
     {
         private readonly RambleTrackerContext _db = new RambleTrackerContext();
 
         // GET: api/PositionDatas
-        public IQueryable<PositionData> GetPositionDatas()
+        public IQueryable<PositionDataViewModel> GetPositionDatas()
         {
-            return _db.PositionDatas;
+            return _db.PositionDatas.Select(x => new PositionDataViewModel
+            {
+                Id = x.Id,
+                Latitude = x.Latitude,
+                Longitude = x.Longitude,
+                DateTime = x.DateTime,
+                TrackId = x.TrackId
+            });
         }
 
         // GET: api/PositionDatas/5
         [ResponseType(typeof(PositionData))]
         public async Task<IHttpActionResult> GetPositionData(int id)
         {
-            PositionData positionData = await _db.PositionDatas.FindAsync(id);
+            var positionData = await _db.PositionDatas.FindAsync(id);
             if (positionData == null)
             {
                 return NotFound();

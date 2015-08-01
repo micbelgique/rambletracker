@@ -31,11 +31,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\Api\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\Api\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -52,6 +54,14 @@
     <Compile Include="Migrations\201507311413339_InitialCreate.cs" />
     <Compile Include="Migrations\201507311413339_InitialCreate.Designer.cs">
       <DependentUpon>201507311413339_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508010810393_Tracks.cs" />
+    <Compile Include="Migrations\201508010810393_Tracks.Designer.cs">
+      <DependentUpon>201508010810393_Tracks.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508010826343_TrackDate.cs" />
+    <Compile Include="Migrations\201508010826343_TrackDate.Designer.cs">
+      <DependentUpon>201508010826343_TrackDate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="RambleTrackerContext.cs" />
@@ -70,6 +80,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201507311413339_InitialCreate.resx">
       <DependentUpon>201507311413339_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508010810393_Tracks.resx">
+      <DependentUpon>201508010810393_Tracks.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508010826343_TrackDate.resx">
+      <DependentUpon>201508010826343_TrackDate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
