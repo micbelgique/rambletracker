@@ -60,7 +60,7 @@ $(function () {
 				+ "</a>");
 		});
 
-		$(items.join("")).appendTo("#sidepanel");
+		$(items.join("")).appendTo("#sidebar");
 	});
 });
 
