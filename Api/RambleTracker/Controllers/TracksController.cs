@@ -3,6 +3,7 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using RambleTracker.DAL;
 using RambleTracker.Model;
@@ -10,6 +11,7 @@ using RambleTracker.ViewModels;
 
 namespace RambleTracker.Controllers
 {
+    [EnableCors(origins: "http://micdevcamp.github.io", headers: "*", methods: "*")]
     public class TracksController : ApiController
     {
         private readonly RambleTrackerContext _db = new RambleTrackerContext();
