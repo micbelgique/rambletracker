@@ -5,15 +5,17 @@ $(function(){
 		
 		$.getJSON( "http://rambletracker7574.azurewebsites.net/api/tracks/", 
 			function( data ) {
-			  var items = [];
-			  $.each( data, function( key, val ) {
-			    items.push( "<div class='panel panel-default'>"
-						  + "<div class='panel-body'>"
-						  + val
-						  + "</div></div>");
-			  });
+
+		  var items = [];
+		  $.each( data, function( key, val ) {
+			 var date = new Date(val.date);
+			  
+		    items.push( '<a href="#" class="btn btn-default btn btn-block">'
+					  + "Track from " + (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear()
+					  + "</a>");
+		  });
 			 
-			  items.join( "" ).appendTo( "#sidepanel" );
+			$(items.join()).appendTo( "#sidepanel" );
 		});
 		
 		var coordinates = [
