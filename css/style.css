@@ -1,9 +1,13 @@
+html, body, #container, #wrapper {
+	height: 100%;
+}
+
 body { 
   	padding-top: 70px; 
 }
 
 #map-canvas {
-	height: 500px;
+	height: 100%;
 	margin: 0; 
 	padding: 0;
 }

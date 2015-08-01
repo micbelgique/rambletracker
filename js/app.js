@@ -3,6 +3,19 @@ $(function(){
 	
 	function initialize() {
 		
+		$.getJSON( "http://rambletracker7574.azurewebsites.net/api/tracks/", 
+			function( data ) {
+			  var items = [];
+			  $.each( data, function( key, val ) {
+			    items.push( "<div class='panel panel-default'>"
+						  + "<div class='panel-body'>"
+						  + val
+						  + "</div></div>");
+			  });
+			 
+			  items.join( "" ).appendTo( "#sidepanel" );
+		});
+		
 		var coordinates = [
 		    new google.maps.LatLng(50.34597903, 5.45968479),
 		    new google.maps.LatLng(50.34597903, 5.46213747),
