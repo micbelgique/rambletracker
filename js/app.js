@@ -65,10 +65,9 @@ $(function () {
 		$(items.join("")).appendTo("#sidepanel");
 	});
 
-	$(".track").click(function () {
+	$("a.track").click(function () {
 		$.getJSON("http://rambletracker7574.azurewebsites.net/api/tracks/" + $(this).attr("id"),
 			function (data) {
-
 
 				path.setMap(null);
 
