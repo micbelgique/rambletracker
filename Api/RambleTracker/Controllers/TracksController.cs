@@ -22,16 +22,29 @@ namespace RambleTracker.Controllers
             return _db.Tracks.Select(x => new TrackViewModel
             {
                 Id = x.Id,
-                Date = x.Date,
-                PositionDataIds = x.Positions.Select(z => z.Id).ToList()
+                Date = x.Date
             });
         }
 
         // GET: api/Tracks/5
-        [ResponseType(typeof(Track))]
+        [ResponseType(typeof(TrackViewModel))]
         public IHttpActionResult GetTrack(int id)
         {
-            var track = _db.Tracks.Find(id);
+            var track = _db.Tracks.Where(x => x.Id == id).Select(x => new TrackViewModel
+            {
+                Id = x.Id,
+                Date = x.Date,
+                Positions = x.Positions.Select(z => new PositionDataViewModel
+                {
+                    Id = z.Id,
+                    Latitude = z.Latitude,
+                    Longitude = z.Longitude,
+                    DateTime = z.DateTime,
+                    TrackId = z.TrackId
+                }).ToList()
+
+            }).FirstOrDefault();
+
             if (track == null)
             {
                 return NotFound();
@@ -54,6 +67,10 @@ namespace RambleTracker.Controllers
                 return BadRequest();
             }
 
+            var firstPosition = track.Positions.FirstOrDefault();
+            if (firstPosition != null)
+                track.Date = firstPosition.DateTime;
+
             _db.Entry(track).State = EntityState.Modified;
 
             try
@@ -66,10 +83,7 @@ namespace RambleTracker.Controllers
                 {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
+                throw;
             }
 
             return StatusCode(HttpStatusCode.NoContent);

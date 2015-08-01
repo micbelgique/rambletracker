@@ -7,6 +7,6 @@ namespace RambleTracker.ViewModels
     {
         public int Id { get; set; }
         public DateTime Date { get; set; }
-        public List<int> PositionDataIds { get; set; }
+        public List<PositionDataViewModel> Positions { get; set; }
     }
 }
