@@ -10,6 +10,7 @@ using RambleTracker.Model;
 using RambleTracker.ViewModels;
 using System.IO;
 using System;
+using System.Threading.Tasks;
 
 namespace RambleTracker.Controllers
 {
@@ -134,6 +135,39 @@ namespace RambleTracker.Controllers
             return CreatedAtRoute("DefaultApi", new { id = track.Id }, track);
         }
 
+        
+        // POST: api/Tracks
+        [ResponseType(typeof(Track))]
+        public async Task<IHttpActionResult> PostTrack()
+        {
+            string trackStr = await Request.Content.ReadAsStringAsync();
+
+            Track track = new Track();
+            track.Date = DateTime.Now;
+
+            using (StringReader reader = new StringReader(trackStr))
+            {
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    PositionData pos = new PositionData();
+
+                    string[] parts = line.Split(new char[] { ',' });
+                    pos.Latitude = Convert.ToDouble(parts[0]);
+                    pos.Longitude = Convert.ToDouble(parts[1]);
+                    pos.DateTime = DateTime.ParseExact(parts[2], "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+
+                    track.Positions.Add(pos);
+                }
+            }
+
+            _db.Tracks.Add(track);
+            _db.SaveChanges();
+
+
+            return Ok();
+            //return CreatedAtRoute("DefaultApi", new { id = track.Id }, track);
+        }
         // DELETE: api/Tracks/5
         [ResponseType(typeof(Track))]
         public IHttpActionResult DeleteTrack(int id)
