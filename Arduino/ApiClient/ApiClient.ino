@@ -1,18 +1,3 @@
-/*
-  Web client
-
- This sketch connects to a website (http://www.google.com)
- using an Arduino Wiznet Ethernet shield.
-
- Circuit:
- * Ethernet shield attached to pins 10, 11, 12, 13
-
- created 18 Dec 2009
- by David A. Mellis
- modified 9 Apr 2012
- by Tom Igoe, based on work by Adrian McEwen
-
- */
 
 #include <SPI.h>
 #include <Ethernet.h>
@@ -63,7 +48,7 @@ void setup() {
     //client.println("Host: lumen.luc-k.com");
     //client.println("Connection: close");
     //client.println();
-    
+
     // Make a HTTP POST request:
     Serial.println("[POST] /tracker.php");
     client.println("POST /tracker.php?message=nok HTTP/1.1");

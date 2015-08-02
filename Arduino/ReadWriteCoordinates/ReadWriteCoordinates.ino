@@ -47,16 +47,16 @@ void setup()
   // if the file opened okay, write to it:
   if (myFile) {
     Serial.print("Writing to tracker.txt...");
-    myFile.println("{\"latitude\": 50.357933, \"longitude\": 5.496082, \"dateTime\": \"2015-07-31T17:12:18.748472+02:00\"}");
-    myFile.println("{\"latitude\": 50.359631, \"longitude\": 5.495116, \"dateTime\": \"2015-07-31T17:21:34.748472+02:00\"}");
-    myFile.println("{\"latitude\": 50.362040, \"longitude\": 5.497241, \"dateTime\": \"2015-07-31T17:28:45.748472+02:00\"}");
-    myFile.println("{\"latitude\": 50.365366, \"longitude\": 5.499923, \"dateTime\": \"2015-07-31T17:31:10.748472+02:00\"}");
-    myFile.println("{\"latitude\": 50.374686, \"longitude\": 5.515609, \"dateTime\": \"2015-07-31T17:39:28.748472+02:00\"}");
-    myFile.println("{\"latitude\": 50.372086, \"longitude\": 5.512926, \"dateTime\": \"2015-07-31T17:42:54.748472+02:00\"}");
-    myFile.println("{\"latitude\": 50.364969, \"longitude\": 5.506618, \"dateTime\": \"2015-07-31T17:46:12.748472+02:00\"}");
-    // myFile.println("{\"latitude\": 50.358713, \"longitude\": 5.500824, \"dateTime\": \"2015-07-31T17:55:09.748472+02:00\"}");
-    // myFile.println("{\"latitude\": 50.355934, \"longitude\": 5.495095, \"dateTime\": \"2015-07-31T18:10:08.748472+02:00\"}");
-    // myFile.println("{\"latitude\": 50.357536, \"longitude\": 5.496554, \"dateTime\": \"2015-07-31T18:33:39.748472+02:00\"}");
+    myFile.println("50.357933,5.496082,2015-07-31 17:12:18");
+    myFile.println("50.359631,5.495116,2015-07-31 17:21:34");
+    myFile.println("50.362040,5.497241,2015-07-31 17:28:45");
+    myFile.println("50.365366,5.499923,2015-07-31 17:31:10");
+    myFile.println("50.374686,5.515609,2015-07-31 17:39:28");
+    myFile.println("50.372086,5.512926,2015-07-31 17:42:54");
+    myFile.println("50.364969,5.506618,2015-07-31 17:46:12");
+    myFile.println("50.358713,5.500824,2015-07-31 17:55:09");
+    myFile.println("50.355934,5.495095,2015-07-31 18:10:08");
+    myFile.print("50.357536,5.496554,2015-07-31 18:33:39");
     // close the file:
     myFile.close();
     Serial.println("done.");
