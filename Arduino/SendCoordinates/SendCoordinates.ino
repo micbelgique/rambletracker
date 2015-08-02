@@ -8,13 +8,11 @@
 #include <SD.h>
 
 byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
-char server[] = "phpninja.be";
+char server[] = "rambletracker7574.azurewebsites.net";
+// char server[] = "phpninja.be";
 IPAddress ip(192, 168, 2, 2);
 EthernetClient client;
 File myFile;
-String postData;
-char fileChar;
-char fileString[500];
 
 void setup()
 {
@@ -41,7 +39,7 @@ void setup()
   Serial.println("connecting...");
 
   // if you get a connection, report back via serial:
-  // if (client.connect(server, 80)) {
+  if (client.connect(server, 80)) {
     Serial.println("connected");
 
     // Remove/Empty the file
@@ -51,53 +49,26 @@ void setup()
     // re-open the file for reading:
     myFile = SD.open("tracker.txt");
     if (myFile) {
-      Serial.println("Reading tracker.txt... Size of " + myFile.size());
-
-      postData = "{\"positions\": [";
-
-      int i;
-
-      for(i = 0; i < myFile.available(); i++) {
-        fileChar = myFile.read();
-        fileString[i] = fileChar;
-      }
-
-      // fileString[i] = ",";
-
-      Serial.println(fileString);
-
-      // while (myFile.available()) {
-
-      //   fileChar = myFile.read();
-
-      //   Serial.println("Post data :");
-      //   Serial.println(postData);
-
-      //   postData += myFile.read();
-      //   postData += ", ";
-      // }
-
-      // Serial.println("Post data :");
-      // Serial.println(postData);
-
-      // postData = postData.substring(0, postData.length() - 1);
-      // postData = postData + "]}";
-
-      // Serial.println("Post data :");
-      // Serial.println(postData);
+      Serial.println("Reading file...");
 
       // Make a HTTP POST request:
-      // Serial.println("[POST] /tracker.php");
+      Serial.println("[POST] /api/tracks");
+
+      client.println("POST /api/tracks HTTP/1.1");
+      client.println("Host: rambletracker7574.azurewebsites.net");
+
       // client.println("POST /tracker.php HTTP/1.1");
       // client.println("Host: phpninja.be");
-      // client.println("Content-Type: application/json");
-      // client.print("Content-Length: ");
-      // client.println(postData.length());
-      // client.println();
-      // client.println(postData);
-      // client.println();
-      // client.println("Connection: close");
-      // client.println();
+      client.println("Content-Type: text/plain");
+      client.print("Content-Length: ");
+      client.println("380");
+      client.println();
+      while(myFile.available()) {
+        client.print((char)myFile.read());
+      }
+      client.println();
+      client.println("Connection: close");
+      client.println();
 
       // Serial.println("File content sent.");
       // close the file:
@@ -108,11 +79,11 @@ void setup()
     }
 
     Serial.println("Reading response...");
-  // }
-  // else {
-  //   // kf you didn't get a connection to the server:
-  //   Serial.println("connection failed");
-  // }
+  }
+  else {
+    // kf you didn't get a connection to the server:
+    Serial.println("connection failed");
+  }
 }
 
 void loop()
