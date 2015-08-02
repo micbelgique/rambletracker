@@ -11,6 +11,10 @@ using System.Web.Http.Description;
 using RambleTracker.DAL;
 using RambleTracker.Model;
 using System.Threading.Tasks;
+using System.IO;
+using System.Net.Http.Headers;
+using RambleTracker.ViewModels;
+using System.Web.Http.Cors;
 
 namespace RambleTracker.Controllers
 {
@@ -19,22 +23,38 @@ namespace RambleTracker.Controllers
         private RambleTrackerContext db = new RambleTrackerContext();
 
         // GET: api/Images
-        public IQueryable<Image> GetImages()
+        public IQueryable<ImageViewModel> GetImages(int id)
         {
-            return db.Images;
+            Track track = db.Tracks.Find(id);
+            List<ImageViewModel> vmList = new List<ImageViewModel>();
+            if(track != null)
+            {
+                foreach (var item in track.Images)
+                {
+                    ImageViewModel vm = new ImageViewModel();
+                    vm.Url = Url.Route("Default", new { controller = "Images", action = "Image", id = item.Id });
+                    vmList.Add(vm);
+                }
+            }
+
+            return vmList.AsQueryable();
         }
 
         // GET: api/Images/5
-        [ResponseType(typeof(Image))]
-        public IHttpActionResult GetImage(int id)
+        public HttpResponseMessage GetImage(int id)
         {
             Image image = db.Images.Find(id);
             if (image == null)
             {
-                return NotFound();
+                return new HttpResponseMessage(HttpStatusCode.OK);
             }
 
-            return Ok(image);
+            HttpResponseMessage httpResponseMessage = new HttpResponseMessage(HttpStatusCode.OK);
+            byte[] fileData = image.Bytes;
+            MemoryStream ms = new MemoryStream(fileData);
+            httpResponseMessage.Content = new StreamContent(ms);
+            httpResponseMessage.Content.Headers.ContentType = new MediaTypeHeaderValue("image/jpg");
+            return httpResponseMessage;
         }
 
         // PUT: api/Images/5
@@ -88,7 +108,7 @@ namespace RambleTracker.Controllers
         //}
 
         [HttpPost]
-        public async Task<IHttpActionResult> PostImage(int trackId)
+        public async Task<IHttpActionResult> PostImage(int id)
         {
             if (!Request.Content.IsMimeMultipartContent())
                 throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
@@ -102,7 +122,7 @@ namespace RambleTracker.Controllers
                 var date = file.Headers.ContentDisposition.CreationDate.Value.DateTime;
                 var buffer = await file.ReadAsByteArrayAsync();
 
-                Image img = new Image { Name = fileName, Bytes = buffer, Date = date, TrackId = trackId };
+                Image img = new Image { Name = fileName, Bytes = buffer, Date = date, TrackId = id };
 
                 db.Images.Add(img);
             }
