@@ -88,7 +88,7 @@ namespace RambleTracker.Controllers
         //}
 
         [HttpPost]
-        public async Task<IHttpActionResult> PostImage()
+        public async Task<IHttpActionResult> PostImage(int trackId)
         {
             if (!Request.Content.IsMimeMultipartContent())
                 throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
@@ -102,7 +102,7 @@ namespace RambleTracker.Controllers
                 var date = file.Headers.ContentDisposition.CreationDate.Value.DateTime;
                 var buffer = await file.ReadAsByteArrayAsync();
 
-                Image img = new Image { Name = fileName, Bytes = buffer, Date = date };
+                Image img = new Image { Name = fileName, Bytes = buffer, Date = date, TrackId = trackId };
 
                 db.Images.Add(img);
             }
