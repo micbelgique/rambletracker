@@ -153,17 +153,22 @@ namespace RambleTracker.Controllers
                     PositionData pos = new PositionData();
 
                     string[] parts = line.Split(new char[] { ',' });
-                    pos.Latitude = Convert.ToDouble(parts[0]);
-                    pos.Longitude = Convert.ToDouble(parts[1]);
-                    pos.DateTime = DateTime.ParseExact(parts[2], "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+                    if(!string.IsNullOrEmpty(parts[0]) || !string.IsNullOrEmpty(parts[1]) || !string.IsNullOrEmpty(parts[2]))
+                    {
+                        pos.Latitude = Convert.ToDouble(parts[0]);
+                        pos.Longitude = Convert.ToDouble(parts[1]);
 
-                    track.Positions.Add(pos);
+                        parts[2] = parts[2].TrimEnd(new char[] { '\r', '\n' });
+
+                        pos.DateTime = DateTime.ParseExact(parts[2], "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+
+                        track.Positions.Add(pos);
+                    }
                 }
             }
 
             _db.Tracks.Add(track);
             _db.SaveChanges();
-
 
             return Ok();
             //return CreatedAtRoute("DefaultApi", new { id = track.Id }, track);

@@ -12,5 +12,9 @@ namespace RambleTracker.Model
         public string Name { get; set; }
         public byte[] Bytes { get; set; }
         public DateTime Date { get; set; }
+
+        public int TrackId { get; set; }
+
+        public virtual Track Track { get; set; }
     }
 }

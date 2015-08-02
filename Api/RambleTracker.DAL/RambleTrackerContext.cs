@@ -7,6 +7,7 @@ namespace RambleTracker.DAL
     {
         public DbSet<PositionData> PositionDatas { get; set; }
         public DbSet<Track> Tracks { get; set; }
+        public DbSet<Image> Images { get; set; }
 
         public RambleTrackerContext() : base("RambleTrackerConnection")
         {
@@ -21,9 +22,14 @@ namespace RambleTracker.DAL
                 .HasForeignKey(x => x.TrackId)
                 .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<Image>()
+                .HasRequired(x => x.Track)
+                .WithMany(x => x.Images)
+                .HasForeignKey(x => x.TrackId)
+                .WillCascadeOnDelete(false);
+
             base.OnModelCreating(modelBuilder);
         }
 
-        public System.Data.Entity.DbSet<RambleTracker.Model.Image> Images { get; set; }
     }
 }
