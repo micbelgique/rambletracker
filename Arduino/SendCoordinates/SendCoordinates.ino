@@ -59,9 +59,10 @@ void setup()
 
       // client.println("POST /tracker.php HTTP/1.1");
       // client.println("Host: phpninja.be");
+
       client.println("Content-Type: text/plain");
       client.print("Content-Length: ");
-      client.println("380");
+      client.println(myFile.size());
       client.println();
       while(myFile.available()) {
         client.print((char)myFile.read());
